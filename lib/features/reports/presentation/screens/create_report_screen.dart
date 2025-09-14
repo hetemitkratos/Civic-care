@@ -16,7 +16,8 @@ class CreateReportScreen extends ConsumerStatefulWidget {
   ConsumerState<CreateReportScreen> createState() => _CreateReportScreenState();
 }
 
-class _CreateReportScreenState extends ConsumerState<CreateReportScreen> {
+class _CreateReportScreenState extends ConsumerState<CreateReportScreen>
+    with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -27,17 +28,53 @@ class _CreateReportScreenState extends ConsumerState<CreateReportScreen> {
   List<File> _selectedImages = [];
   LocationModel? _currentLocation;
   bool _isLoadingLocation = false;
+  late AnimationController _factAnimationController;
+  late Animation<double> _factOpacityAnimation;
+
+  // Category facts map
+  static const Map<String, String> categoryFacts = {
+    'Pothole':
+        "Did you know? Reporting a single pothole can save your neighbours an average of ₹25,000 in potential car and two-wheeler repairs and prevent accidents for cyclists. You're not just fixing a hole, you're a road safety hero!",
+    'Street Light':
+        "Bright idea! Studies show that well-lit streets can reduce nighttime crime by over 20%. By reporting a broken streetlight, you're making your entire neighbourhood safer for evening walkers and families.",
+    'Garbage':
+        "Healthy streets, happy feet! An overflowing bin can become a breeding ground for diseases. By reporting it, you're protecting the public health of your community and keeping local animals safe from harm.",
+    'Graffiti':
+        "Community canvas! Areas that quickly remove unsolicited graffiti see a significant drop in vandalism. Your report helps maintain community pride, boosts local property values, and keeps your neighbourhood beautiful.",
+    'Broken Sidewalk':
+        "Step up for safety! A level sidewalk is crucial for the safety of children, the elderly, and people with disabilities. By reporting a broken pavement, you're making your community more walkable and accessible for everyone.",
+    'Other':
+        "You're a community scout! Reporting a unique issue helps officials spot new trends or problems they might not know about. Your keen eye helps make the system smarter and your city better!",
+  };
 
   @override
   void initState() {
     super.initState();
     _getCurrentLocation();
+
+    // Initialize animation controller for fact widget
+    _factAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    _factOpacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _factAnimationController,
+      curve: Curves.easeInOut,
+    ));
+
+    // Start animation since we have a default category
+    _factAnimationController.forward();
   }
 
   @override
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
+    _factAnimationController.dispose();
     super.dispose();
   }
 
@@ -126,9 +163,7 @@ class _CreateReportScreenState extends ConsumerState<CreateReportScreen> {
       address: _currentLocation!.address,
     );
 
-    await ref
-        .read(reportsControllerProvider.notifier)
-        .createReport(
+    await ref.read(reportsControllerProvider.notifier).createReport(
           userId: user.id,
           title: _titleController.text.trim(),
           description: _descriptionController.text.trim(),
@@ -196,6 +231,9 @@ class _CreateReportScreenState extends ConsumerState<CreateReportScreen> {
               onChanged: (value) {
                 if (value != null) {
                   setState(() => _selectedCategory = value);
+                  // Trigger animation when category changes
+                  _factAnimationController.reset();
+                  _factAnimationController.forward();
                 }
               },
             ),
@@ -336,8 +374,8 @@ class _CreateReportScreenState extends ConsumerState<CreateReportScreen> {
                       Text(
                         'No photos selected',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey[600],
-                        ),
+                              color: Colors.grey[600],
+                            ),
                       )
                     else
                       SizedBox(
@@ -371,9 +409,11 @@ class _CreateReportScreenState extends ConsumerState<CreateReportScreen> {
                                           color: Colors.red,
                                           shape: BoxShape.circle,
                                         ),
-                                        child: const Icon(
+                                        child: Icon(
                                           Icons.close,
-                                          color: Colors.white,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onError,
                                           size: 16,
                                         ),
                                       ),
@@ -400,9 +440,86 @@ class _CreateReportScreenState extends ConsumerState<CreateReportScreen> {
                     )
                   : const Text('Submit Report'),
             ),
+            const SizedBox(height: 16),
+            _buildCategoryFactWidget(),
+            const SizedBox(height: 24), // Extra spacing at bottom
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildCategoryFactWidget() {
+    final categoryName = _getCategoryName(_selectedCategory);
+    final fact = categoryFacts[categoryName];
+
+    if (fact == null) return const SizedBox.shrink();
+
+    return AnimatedBuilder(
+      animation: _factOpacityAnimation,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _factOpacityAnimation.value,
+          child: Container(
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: Theme.of(context).dividerColor.withValues(alpha: 0.3),
+                width: 1,
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Text(
+                    '💡',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Did you know?',
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        fact,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withValues(alpha: 0.8),
+                              height: 1.4,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 

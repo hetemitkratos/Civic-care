@@ -174,16 +174,16 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             ? Text(
                 user.displayName?.substring(0, 1).toUpperCase() ??
                     user.email.substring(0, 1).toUpperCase(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 36,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               )
-            : const Icon(
+            : Icon(
                 Icons.person_rounded,
                 size: 48,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onPrimary,
               ),
       ),
     );
@@ -261,15 +261,15 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           child: ElevatedButton.icon(
             onPressed: _isLoading ? null : _saveProfile,
             icon: _isLoading
-                ? const SizedBox(
+                ? SizedBox(
                     width: 16,
                     height: 16,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.onPrimary),
                     ),
                   )
-                : const Icon(Icons.save_rounded),
+                : Icon(Icons.save_rounded, color: Theme.of(context).colorScheme.onPrimary),
             label: Text(_isLoading ? 'Saving...' : 'Save Changes'),
           ),
         ),

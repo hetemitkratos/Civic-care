@@ -40,17 +40,17 @@ class ReportDetailsScreen extends ConsumerWidget {
                   child: Text(
                     report.title,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ),
                 const SizedBox(width: 16),
                 _buildStatusChip(context, report.status),
               ],
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Category and Importance
             Row(
               children: [
@@ -59,11 +59,12 @@ class ReportDetailsScreen extends ConsumerWidget {
                 _buildImportanceChip(context, report.importance),
               ],
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Upvote section
             Card(
+              color: Theme.of(context).cardColor,
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
@@ -74,13 +75,19 @@ class ReportDetailsScreen extends ConsumerWidget {
                           : null,
                       icon: Icon(
                         hasUpvoted ? Icons.thumb_up : Icons.thumb_up_outlined,
-                        color: hasUpvoted ? Colors.blue : null,
+                        color: hasUpvoted
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(width: 8),
                     Text(
                       '${report.upvotes} ${report.upvotes == 1 ? 'upvote' : 'upvotes'}',
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: hasUpvoted
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context).colorScheme.onSurface,
+                          ),
                     ),
                     if (user == null) ...[
                       const Spacer(),
@@ -93,39 +100,39 @@ class ReportDetailsScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Description
             Text(
               'Description',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 8),
             Text(
               report.description,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Location
             Text(
               'Location',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 8),
             Card(
               child: ListTile(
                 leading: const Icon(Icons.location_on),
                 title: Text(
-                  report.location.address ?? 
-                  'Lat: ${report.location.latitude.toStringAsFixed(6)}, '
-                  'Lng: ${report.location.longitude.toStringAsFixed(6)}',
+                  report.location.address ??
+                      'Lat: ${report.location.latitude.toStringAsFixed(6)}, '
+                          'Lng: ${report.location.longitude.toStringAsFixed(6)}',
                 ),
                 trailing: const Icon(Icons.open_in_new),
                 onTap: () {
@@ -133,16 +140,16 @@ class ReportDetailsScreen extends ConsumerWidget {
                 },
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Images
             if (report.imageUrls.isNotEmpty) ...[
               Text(
                 'Photos',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 8),
               SizedBox(
@@ -177,27 +184,27 @@ class ReportDetailsScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
             ],
-            
+
             // Timestamps
             Text(
               'Reported',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 8),
             Text(
               _formatDateTime(report.createdAt),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            
+
             if (report.updatedAt != null) ...[
               const SizedBox(height: 8),
               Text(
                 'Last Updated',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 8),
               Text(
@@ -205,14 +212,14 @@ class ReportDetailsScreen extends ConsumerWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
-            
+
             if (report.adminNotes != null) ...[
               const SizedBox(height: 16),
               Text(
                 'Admin Notes',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 8),
               Card(
@@ -235,7 +242,7 @@ class ReportDetailsScreen extends ConsumerWidget {
   Widget _buildStatusChip(BuildContext context, ReportStatus status) {
     Color color;
     String label;
-    
+
     switch (status) {
       case ReportStatus.submitted:
         color = Colors.red;
@@ -254,11 +261,14 @@ class ReportDetailsScreen extends ConsumerWidget {
         label = 'Rejected';
         break;
     }
-    
+
     return Chip(
       label: Text(
         label,
-        style: const TextStyle(color: Colors.white, fontSize: 12),
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: Colors.white,
+              fontSize: 12,
+            ),
       ),
       backgroundColor: color,
     );
@@ -267,7 +277,7 @@ class ReportDetailsScreen extends ConsumerWidget {
   Widget _buildCategoryChip(BuildContext context, ReportCategory category) {
     String label;
     IconData icon;
-    
+
     switch (category) {
       case ReportCategory.pothole:
         label = 'Pothole';
@@ -294,18 +304,22 @@ class ReportDetailsScreen extends ConsumerWidget {
         icon = Icons.help;
         break;
     }
-    
+
     return Chip(
-      avatar: Icon(icon, size: 16),
-      label: Text(label, style: const TextStyle(fontSize: 12)),
+      avatar:
+          Icon(icon, size: 16, color: Theme.of(context).colorScheme.onSurface),
+      label: Text(label,
+          style:
+              Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 12)),
     );
   }
 
-  Widget _buildImportanceChip(BuildContext context, ReportImportance importance) {
+  Widget _buildImportanceChip(
+      BuildContext context, ReportImportance importance) {
     Color color;
     String label;
     IconData icon;
-    
+
     switch (importance) {
       case ReportImportance.low:
         color = Colors.green;
@@ -328,12 +342,15 @@ class ReportDetailsScreen extends ConsumerWidget {
         icon = Icons.warning;
         break;
     }
-    
+
     return Chip(
       avatar: Icon(icon, size: 16, color: Colors.white),
       label: Text(
         label,
-        style: const TextStyle(color: Colors.white, fontSize: 12),
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: Colors.white,
+              fontSize: 12,
+            ),
       ),
       backgroundColor: color,
     );
@@ -346,10 +363,10 @@ class ReportDetailsScreen extends ConsumerWidget {
   Future<void> _handleUpvote(WidgetRef ref, String userId) async {
     try {
       await ref.read(reportsControllerProvider.notifier).toggleUpvote(
-        reportId: report.id,
-        userId: userId,
-      );
-      
+            reportId: report.id,
+            userId: userId,
+          );
+
       // Refresh the reports list
       ref.refresh(allReportsProvider);
     } catch (e) {

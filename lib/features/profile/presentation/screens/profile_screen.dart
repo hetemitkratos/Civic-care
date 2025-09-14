@@ -146,11 +146,11 @@ class ProfileScreen extends ConsumerWidget {
                         height: 100,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
-                          return _buildInitialsAvatar(user);
+                          return _buildInitialsAvatar(context, user);
                         },
                       ),
                     )
-                  : _buildInitialsAvatar(user),
+                  : _buildInitialsAvatar(context, user),
             ),
             const SizedBox(height: 20),
 
@@ -192,14 +192,14 @@ class ProfileScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildInitialsAvatar(user) {
+  Widget _buildInitialsAvatar(BuildContext context, user) {
     return Center(
       child: Text(
         user.displayName?.substring(0, 1).toUpperCase() ??
             user.email.substring(0, 1).toUpperCase(),
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 36,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.onPrimary,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -493,9 +493,9 @@ class ProfileScreen extends ConsumerWidget {
           color: AppTheme.primaryColor,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: const Icon(
+        child: Icon(
           Icons.report_problem_rounded,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.onPrimary,
           size: 24,
         ),
       ),

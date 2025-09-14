@@ -87,17 +87,17 @@ class DashboardScreen extends ConsumerWidget {
             children: [
               Icon(
                 greetingIcon,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onPrimary,
                 size: 28,
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
                   '$greeting, ${user?.displayName?.split(' ').first ?? 'Citizen'}!',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
               ),
@@ -106,9 +106,12 @@ class DashboardScreen extends ConsumerWidget {
           const SizedBox(height: 12),
           Text(
             'Ready to make your community better? Report issues, track progress, and engage with your neighbors.',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
-              color: Colors.white70,
+              color: Theme.of(context)
+                  .colorScheme
+                  .onPrimary
+                  .withValues(alpha: 0.8),
               height: 1.4,
             ),
           ),
@@ -214,7 +217,7 @@ class DashboardScreen extends ConsumerWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -393,24 +396,27 @@ class DashboardScreen extends ConsumerWidget {
               Icon(
                 icon,
                 size: 32,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onPrimary,
               ),
               const SizedBox(height: 12),
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 4),
               Text(
                 subtitle,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
-                  color: Colors.white70,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onPrimary
+                      .withValues(alpha: 0.8),
                 ),
                 textAlign: TextAlign.center,
               ),

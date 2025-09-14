@@ -129,22 +129,25 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onPrimary
+                        .withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.report_problem,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     size: 32,
                   ),
                 ),
                 const SizedBox(height: 16),
 
                 // App Name
-                const Text(
+                Text(
                   'Civic Reporter',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -155,8 +158,11 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
                 if (user != null) ...[
                   Text(
                     user.displayName ?? 'User',
-                    style: const TextStyle(
-                      color: Colors.white70,
+                    style: TextStyle(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onPrimary
+                          .withValues(alpha: 0.8),
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -164,8 +170,11 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
                   const SizedBox(height: 2),
                   Text(
                     user.email,
-                    style: const TextStyle(
-                      color: Colors.white60,
+                    style: TextStyle(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onPrimary
+                          .withValues(alpha: 0.7),
                       fontSize: 14,
                     ),
                   ),

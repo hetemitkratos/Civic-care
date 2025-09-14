@@ -8,7 +8,7 @@ class AppTheme {
   static const Color errorColor = Color(0xFFEF4444); // Red
   static const Color warningColor = Color(0xFFF97316); // Orange
   static const Color surfaceColor = Color(0xFFF8FAFC); // Light gray
-  static const Color cardColor = Colors.white;
+  static const Color cardColor = Color(0xFFFFFFFF);
 
   // Dark theme colors
   static const Color darkSurfaceColor = Color(0xFF1E293B); // Dark slate
@@ -28,9 +28,9 @@ class AppTheme {
         surface: surfaceColor,
         error: errorColor,
         onPrimary: Colors.white,
-        onSecondary: Colors.white,
+        onSecondary: secondaryColor,
         onSurface: Color(0xFF1E293B),
-        onError: Colors.white,
+        onError: errorColor,
       ),
 
       // App Bar Theme
@@ -50,7 +50,7 @@ class AppTheme {
       // Card Theme
       cardTheme: CardThemeData(
         elevation: 2,
-        shadowColor: Colors.black.withValues(alpha: 0.1),
+        shadowColor: Colors.black.withOpacity(0.1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),

@@ -56,12 +56,21 @@ class HomeScreen extends ConsumerWidget {
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(Icons.report_problem, size: 40, color: Colors.redAccent),
-                              SizedBox(height: 12),
-                              Text('Report an Issue', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                              SizedBox(height: 6),
-                              Text('Submit a new report with photos and location.', textAlign: TextAlign.center, style: TextStyle(fontSize: 13, color: Colors.black54)),
+                            children: [
+                              const Icon(Icons.report_problem,
+                                  size: 40, color: Colors.redAccent),
+                              const SizedBox(height: 12),
+                              const Text('Report an Issue',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16)),
+                              const SizedBox(height: 6),
+                              Text(
+                                  'Submit a new report with photos and location.',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.grey.shade600)),
                             ],
                           ),
                         ),
@@ -81,12 +90,20 @@ class HomeScreen extends ConsumerWidget {
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(Icons.map_outlined, size: 40, color: Colors.blueAccent),
-                              SizedBox(height: 12),
-                              Text('View All Issues', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                              SizedBox(height: 6),
-                              Text('See all active issues in your city.', textAlign: TextAlign.center, style: TextStyle(fontSize: 13, color: Colors.black54)),
+                            children: [
+                              const Icon(Icons.map_outlined,
+                                  size: 40, color: Colors.blueAccent),
+                              const SizedBox(height: 12),
+                              const Text('View All Issues',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16)),
+                              const SizedBox(height: 6),
+                              Text('See all active issues in your city.',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.grey.shade600)),
                             ],
                           ),
                         ),
@@ -98,7 +115,10 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 32),
               Text(
                 'Quick Contacts',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
               SizedBox(
@@ -117,13 +137,18 @@ class HomeScreen extends ConsumerWidget {
                         ),
                         elevation: 2,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 16),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(contact['icon'] as IconData, size: 28, color: Colors.teal),
+                              Icon(contact['icon'] as IconData,
+                                  size: 28, color: Colors.teal),
                               const SizedBox(height: 10),
-                              Text(contact['label'] as String, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+                              Text(contact['label'] as String,
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500)),
                             ],
                           ),
                         ),

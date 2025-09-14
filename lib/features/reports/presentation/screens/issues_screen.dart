@@ -59,7 +59,7 @@ class _IssuesScreenState extends ConsumerState<IssuesScreen> {
         color: Theme.of(context).cardColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -323,8 +323,8 @@ class _IssuesScreenState extends ConsumerState<IssuesScreen> {
     return Container(
       decoration: BoxDecoration(
         color: hasUpvoted
-            ? AppTheme.primaryColor.withValues(alpha: 0.1)
-            : Colors.grey.shade100,
+            ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+            : Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20),
       ),
       child: InkWell(
@@ -338,7 +338,9 @@ class _IssuesScreenState extends ConsumerState<IssuesScreen> {
               Icon(
                 hasUpvoted ? Icons.thumb_up_rounded : Icons.thumb_up_outlined,
                 size: 16,
-                color: hasUpvoted ? AppTheme.primaryColor : Colors.grey[600],
+                color: hasUpvoted
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.onSurface,
               ),
               const SizedBox(width: 4),
               Text(
@@ -346,7 +348,9 @@ class _IssuesScreenState extends ConsumerState<IssuesScreen> {
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: hasUpvoted ? AppTheme.primaryColor : Colors.grey[600],
+                  color: hasUpvoted
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ],
