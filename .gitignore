@@ -179,3 +179,14 @@ vendor/bundle/
 
 # App specific
 # Add any app-specific files you want to ignore here
+
+# Development and documentation files
+README_CONTEXT.md
+UPDATE.md
+PITCH.md
+
+# Development notes and temporary files
+*.notes
+*.draft
+dev_notes/
+temp/
