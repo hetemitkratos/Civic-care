@@ -20,6 +20,7 @@ class _IssuesScreenState extends ConsumerState<IssuesScreen> {
   List<ReportEntity> _filteredReports = [];
   String _selectedFilter = 'all';
   String _selectedSort = 'newest';
+  bool _isCompactView = false;
 
   @override
   void initState() {
@@ -67,6 +68,85 @@ class _IssuesScreenState extends ConsumerState<IssuesScreen> {
       ),
       child: Column(
         children: [
+          // Filter Header with View Toggle
+          Row(
+            children: [
+              Text(
+                'Filters',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              const Spacer(),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Theme.of(context).dividerColor,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isCompactView = false;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.view_agenda,
+                        size: 18,
+                        color: !_isCompactView
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withValues(alpha: 0.6),
+                      ),
+                      tooltip: 'Expanded View',
+                      padding: const EdgeInsets.all(6),
+                      constraints: const BoxConstraints(
+                        minWidth: 32,
+                        minHeight: 32,
+                      ),
+                    ),
+                    Container(
+                      width: 1,
+                      height: 20,
+                      color: Theme.of(context).dividerColor,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isCompactView = true;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.view_compact,
+                        size: 18,
+                        color: _isCompactView
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withValues(alpha: 0.6),
+                      ),
+                      tooltip: 'Compact View',
+                      padding: const EdgeInsets.all(6),
+                      constraints: const BoxConstraints(
+                        minWidth: 32,
+                        minHeight: 32,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+
           // Filter Chips
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -187,8 +267,88 @@ class _IssuesScreenState extends ConsumerState<IssuesScreen> {
         itemCount: _filteredReports.length,
         itemBuilder: (context, index) {
           final report = _filteredReports[index];
-          return _buildIssueCard(report);
+          return _isCompactView
+              ? _buildCompactIssueCard(report)
+              : _buildIssueCard(report);
         },
+      ),
+    );
+  }
+
+  Widget _buildCompactIssueCard(ReportEntity report) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8),
+      elevation: 1,
+      child: InkWell(
+        onTap: () => context.push('/report-details/${report.id}'),
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              // Category Icon
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: _getImportanceColor(report.importance)
+                      .withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Icon(
+                  _getCategoryIcon(report.category),
+                  color: _getImportanceColor(report.importance),
+                  size: 16,
+                ),
+              ),
+              const SizedBox(width: 12),
+
+              // Title and Category
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      report.title,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      _getCategoryText(report.category),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.grey[600],
+                            fontSize: 11,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Status and Importance Chips
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  _buildCompactImportanceChip(report.importance),
+                  const SizedBox(height: 4),
+                  Text(
+                    _formatDate(report.createdAt),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.grey[600],
+                          fontSize: 10,
+                        ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(width: 8),
+              // Upvote Button
+              _buildCompactUpvoteButton(report),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -355,6 +515,78 @@ class _IssuesScreenState extends ConsumerState<IssuesScreen> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCompactUpvoteButton(ReportEntity report) {
+    final user = ref.watch(authStateProvider).value;
+    final hasUpvoted = user != null && report.upvotedBy.contains(user.id);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: hasUpvoted
+            ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
+            : Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: hasUpvoted
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).dividerColor,
+          width: 1,
+        ),
+      ),
+      child: InkWell(
+        onTap: user != null ? () => _handleUpvote(report) : null,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                hasUpvoted ? Icons.thumb_up_rounded : Icons.thumb_up_outlined,
+                size: 14,
+                color: hasUpvoted
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.onSurface,
+              ),
+              const SizedBox(width: 2),
+              Text(
+                '${report.upvotes}',
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: hasUpvoted
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCompactImportanceChip(ReportImportance importance) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: _getImportanceColor(importance).withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: _getImportanceColor(importance),
+          width: 0.5,
+        ),
+      ),
+      child: Text(
+        _getImportanceText(importance),
+        style: TextStyle(
+          fontSize: 9,
+          fontWeight: FontWeight.bold,
+          color: _getImportanceColor(importance),
         ),
       ),
     );

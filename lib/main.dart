@@ -7,10 +7,14 @@ import 'core/theme/app_theme.dart';
 import 'core/config/app_config.dart';
 import 'core/providers/theme_provider.dart';
 import 'core/providers/locale_provider.dart';
+import 'core/services/offline_storage_service.dart';
 import 'generated/l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize offline storage
+  await OfflineStorageService.initialize();
 
   await Supabase.initialize(
     url: AppConfig.supabaseUrl,

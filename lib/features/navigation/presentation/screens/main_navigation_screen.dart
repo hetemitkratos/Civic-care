@@ -9,6 +9,7 @@ import '../../../reports/presentation/screens/my_reports_screen.dart';
 import '../../../../core/providers/theme_provider.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/language_selector.dart';
+import '../../../../core/widgets/connectivity_indicator.dart';
 import '../../../../generated/l10n/app_localizations.dart';
 
 class MainNavigationScreen extends ConsumerStatefulWidget {
@@ -55,18 +56,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
             tooltip: 'Open menu',
           ),
         ),
-        actions: [
-          const LanguageSelector(),
-          IconButton(
-            onPressed: () => ref.read(themeProvider.notifier).toggleTheme(),
-            icon: Icon(
-              ref.watch(themeProvider) == ThemeMode.dark
-                  ? Icons.light_mode_rounded
-                  : Icons.dark_mode_rounded,
-            ),
-            tooltip: 'Toggle theme',
-          ),
-        ],
+        actions: _buildAppBarActions(),
       ),
       drawer: _buildDrawer(context, user),
       body: _getCurrentScreen(),
@@ -80,6 +70,31 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
             )
           : null,
     );
+  }
+
+  List<Widget> _buildAppBarActions() {
+    List<Widget> actions = [
+      const ConnectivityIndicator(),
+      const SizedBox(width: 8),
+      const LanguageSelector(),
+    ];
+
+    // Add theme toggle only on home page
+    if (widget.currentRoute == '/home' || widget.currentRoute == '/dashboard') {
+      actions.add(
+        IconButton(
+          onPressed: () => ref.read(themeProvider.notifier).toggleTheme(),
+          icon: Icon(
+            ref.watch(themeProvider) == ThemeMode.dark
+                ? Icons.light_mode_rounded
+                : Icons.dark_mode_rounded,
+          ),
+          tooltip: 'Toggle theme',
+        ),
+      );
+    }
+
+    return actions;
   }
 
   String _getScreenTitle() {
