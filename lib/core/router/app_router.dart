@@ -45,9 +45,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         return '/home';
       }
 
-      // Redirect logged-in users from root to dashboard
+      // Redirect logged-in users from root to home
       if (isLoggedIn && state.matchedLocation == '/') {
-        return '/dashboard';
+        return '/home';
       }
 
       return null;
@@ -62,14 +62,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const LandingScreen(),
       ),
       GoRoute(
-        path: '/dashboard',
-        builder: (context, state) =>
-            const MainNavigationScreen(currentRoute: '/dashboard'),
-      ),
-      GoRoute(
         path: '/home',
         builder: (context, state) =>
-            const MainNavigationScreen(currentRoute: '/dashboard'),
+            const MainNavigationScreen(currentRoute: '/home'),
+      ),
+      GoRoute(
+        path: '/dashboard',
+        builder: (context, state) =>
+            const MainNavigationScreen(currentRoute: '/home'),
       ),
       GoRoute(
         path: '/issues',

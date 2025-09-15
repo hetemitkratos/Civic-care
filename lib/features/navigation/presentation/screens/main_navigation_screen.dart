@@ -14,7 +14,7 @@ class MainNavigationScreen extends ConsumerStatefulWidget {
 
   const MainNavigationScreen({
     super.key,
-    this.currentRoute = '/dashboard',
+    this.currentRoute = '/home',
   });
 
   @override
@@ -25,6 +25,7 @@ class MainNavigationScreen extends ConsumerStatefulWidget {
 class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
   Widget _getCurrentScreen() {
     switch (widget.currentRoute) {
+      case '/home':
       case '/dashboard':
         return const DashboardScreen();
       case '/issues':
@@ -80,8 +81,9 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
 
   String _getScreenTitle() {
     switch (widget.currentRoute) {
+      case '/home':
       case '/dashboard':
-        return 'Dashboard';
+        return 'Home';
       case '/issues':
         return 'All Issues';
       case '/my-reports':
@@ -94,8 +96,9 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
   }
 
   bool _shouldShowFAB() {
-    // Show FAB on dashboard, issues, and my-reports screens
-    return widget.currentRoute == '/dashboard' ||
+    // Show FAB on home, issues, and my-reports screens
+    return widget.currentRoute == '/home' ||
+        widget.currentRoute == '/dashboard' ||
         widget.currentRoute == '/issues' ||
         widget.currentRoute == '/my-reports';
   }
@@ -190,10 +193,11 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
               children: [
                 _buildDrawerItem(
                   context,
-                  icon: Icons.dashboard_rounded,
-                  title: 'Dashboard',
-                  route: '/dashboard',
-                  isSelected: widget.currentRoute == '/dashboard',
+                  icon: Icons.home_rounded,
+                  title: 'Home',
+                  route: '/home',
+                  isSelected: widget.currentRoute == '/home' ||
+                      widget.currentRoute == '/dashboard',
                 ),
                 _buildDrawerItem(
                   context,
