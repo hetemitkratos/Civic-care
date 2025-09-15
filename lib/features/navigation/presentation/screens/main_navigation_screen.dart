@@ -8,6 +8,8 @@ import '../../../profile/presentation/screens/profile_screen.dart';
 import '../../../reports/presentation/screens/my_reports_screen.dart';
 import '../../../../core/providers/theme_provider.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/widgets/language_selector.dart';
+import '../../../../generated/l10n/app_localizations.dart';
 
 class MainNavigationScreen extends ConsumerStatefulWidget {
   final String currentRoute;
@@ -54,6 +56,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
           ),
         ),
         actions: [
+          const LanguageSelector(),
           IconButton(
             onPressed: () => ref.read(themeProvider.notifier).toggleTheme(),
             icon: Icon(
@@ -71,7 +74,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
           ? FloatingActionButton.extended(
               onPressed: () => context.push('/create-report'),
               icon: const Icon(Icons.add_rounded),
-              label: const Text('Report Issue'),
+              label: Text(AppLocalizations.of(context).reportIssue),
               backgroundColor: AppTheme.primaryColor,
               foregroundColor: Colors.white,
             )
@@ -80,18 +83,19 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
   }
 
   String _getScreenTitle() {
+    final l10n = AppLocalizations.of(context);
     switch (widget.currentRoute) {
       case '/home':
       case '/dashboard':
-        return 'Home';
+        return l10n.home;
       case '/issues':
-        return 'All Issues';
+        return l10n.allIssues;
       case '/my-reports':
-        return 'My Reports';
+        return l10n.myReports;
       case '/profile':
-        return 'Profile';
+        return l10n.profile;
       default:
-        return 'Civic Reporter';
+        return l10n.appName;
     }
   }
 
@@ -194,7 +198,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
                 _buildDrawerItem(
                   context,
                   icon: Icons.home_rounded,
-                  title: 'Home',
+                  title: AppLocalizations.of(context).home,
                   route: '/home',
                   isSelected: widget.currentRoute == '/home' ||
                       widget.currentRoute == '/dashboard',
@@ -202,21 +206,21 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
                 _buildDrawerItem(
                   context,
                   icon: Icons.list_alt_rounded,
-                  title: 'All Issues',
+                  title: AppLocalizations.of(context).allIssues,
                   route: '/issues',
                   isSelected: widget.currentRoute == '/issues',
                 ),
                 _buildDrawerItem(
                   context,
                   icon: Icons.assignment_rounded,
-                  title: 'My Reports',
+                  title: AppLocalizations.of(context).myReports,
                   route: '/my-reports',
                   isSelected: widget.currentRoute == '/my-reports',
                 ),
                 _buildDrawerItem(
                   context,
                   icon: Icons.person_rounded,
-                  title: 'Profile',
+                  title: AppLocalizations.of(context).profile,
                   route: '/profile',
                   isSelected: widget.currentRoute == '/profile',
                 ),
@@ -230,7 +234,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
                 _buildDrawerItem(
                   context,
                   icon: Icons.add_circle_rounded,
-                  title: 'Report New Issue',
+                  title: AppLocalizations.of(context).reportIssue,
                   route: '/create-report',
                   isSelected: false,
                   isAction: true,
@@ -284,7 +288,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
                   }
                 },
                 icon: const Icon(Icons.logout_rounded),
-                label: const Text('Logout'),
+                label: Text(AppLocalizations.of(context).logout),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppTheme.errorColor,
                   side: const BorderSide(color: AppTheme.errorColor),

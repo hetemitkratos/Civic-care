@@ -1,0 +1,297 @@
+{
+  "@@locale": "en",
+  "appName": "Civic Reporter",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  
+  "home": "Home",
+  "@home": {
+    "description": "Home screen title"
+  },
+  
+  "issues": "Issues",
+  "@issues": {
+    "description": "Issues screen title"
+  },
+  
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile screen title"
+  },
+  
+  "allIssues": "All Issues",
+  "@allIssues": {
+    "description": "All Issues screen title"
+  },
+  
+  "myReports": "My Reports",
+  "@myReports": {
+    "description": "My Reports screen title"
+  },
+  
+  "reportIssue": "Report Issue",
+  "@reportIssue": {
+    "description": "Report Issue button text"
+  },
+  
+  "goodMorning": "Good morning",
+  "@goodMorning": {
+    "description": "Morning greeting"
+  },
+  
+  "goodAfternoon": "Good afternoon",
+  "@goodAfternoon": {
+    "description": "Afternoon greeting"
+  },
+  
+  "goodEvening": "Good evening",
+  "@goodEvening": {
+    "description": "Evening greeting"
+  },
+  
+  "citizen": "Citizen",
+  "@citizen": {
+    "description": "Default citizen name"
+  },
+  
+  "helpMakeCommunityBetter": "Ready to make your community better? Report issues, track progress, and engage with your neighbors.",
+  "@helpMakeCommunityBetter": {
+    "description": "Community help message"
+  },
+  
+  "quickActions": "Quick Actions",
+  "@quickActions": {
+    "description": "Quick Actions section title"
+  },
+  
+  "reportNewProblem": "Report a new civic problem",
+  "@reportNewProblem": {
+    "description": "Report new problem subtitle"
+  },
+  
+  "viewAllIssues": "View All Issues",
+  "@viewAllIssues": {
+    "description": "View All Issues button text"
+  },
+  
+  "browseCommunityIssues": "Browse community issues",
+  "@browseCommunityIssues": {
+    "description": "Browse community issues subtitle"
+  },
+  
+  "trackSubmissions": "Track your submissions",
+  "@trackSubmissions": {
+    "description": "Track submissions subtitle"
+  },
+  
+  "manageAccount": "Manage your account",
+  "@manageAccount": {
+    "description": "Manage account subtitle"
+  },
+  
+  "recentActivity": "Recent Activity",
+  "@recentActivity": {
+    "description": "Recent Activity section title"
+  },
+  
+  "viewAll": "View All",
+  "@viewAll": {
+    "description": "View All button text"
+  },
+  
+  "communityHighlights": "Community Highlights",
+  "@communityHighlights": {
+    "description": "Community Highlights section title"
+  },
+  
+  "totalIssues": "Total Issues",
+  "@totalIssues": {
+    "description": "Total Issues stat title"
+  },
+  
+  "resolved": "Resolved",
+  "@resolved": {
+    "description": "Resolved issues stat title"
+  },
+  
+  "critical": "Critical",
+  "@critical": {
+    "description": "Critical issues stat title"
+  },
+  
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading text"
+  },
+  
+  "error": "Error",
+  "@error": {
+    "description": "Error text"
+  },
+  
+  "success": "Success",
+  "@success": {
+    "description": "Success text"
+  },
+  
+  "title": "Title",
+  "@title": {
+    "description": "Title field label"
+  },
+  
+  "description": "Description",
+  "@description": {
+    "description": "Description field label"
+  },
+  
+  "category": "Category",
+  "@category": {
+    "description": "Category field label"
+  },
+  
+  "importance": "Importance",
+  "@importance": {
+    "description": "Importance field label"
+  },
+  
+  "location": "Location",
+  "@location": {
+    "description": "Location text"
+  },
+  
+  "photos": "Photos",
+  "@photos": {
+    "description": "Photos text"
+  },
+  
+  "submitReport": "Submit Report",
+  "@submitReport": {
+    "description": "Submit Report button text"
+  },
+  
+  "didYouKnow": "Did you know?",
+  "@didYouKnow": {
+    "description": "Did you know fact title"
+  },
+  
+  "pothole": "Pothole",
+  "@pothole": {
+    "description": "Pothole category"
+  },
+  
+  "streetLight": "Street Light",
+  "@streetLight": {
+    "description": "Street Light category"
+  },
+  
+  "garbage": "Garbage",
+  "@garbage": {
+    "description": "Garbage category"
+  },
+  
+  "graffiti": "Graffiti",
+  "@graffiti": {
+    "description": "Graffiti category"
+  },
+  
+  "brokenSidewalk": "Broken Sidewalk",
+  "@brokenSidewalk": {
+    "description": "Broken Sidewalk category"
+  },
+  
+  "other": "Other",
+  "@other": {
+    "description": "Other category"
+  },
+  
+  "low": "Low",
+  "@low": {
+    "description": "Low importance level"
+  },
+  
+  "medium": "Medium",
+  "@medium": {
+    "description": "Medium importance level"
+  },
+  
+  "high": "High",
+  "@high": {
+    "description": "High importance level"
+  },
+  
+  "submitted": "Submitted",
+  "@submitted": {
+    "description": "Submitted status"
+  },
+  
+  "inProgress": "In Progress",
+  "@inProgress": {
+    "description": "In Progress status"
+  },
+  
+  "rejected": "Rejected",
+  "@rejected": {
+    "description": "Rejected status"
+  },
+  
+  "signIn": "Sign In",
+  "@signIn": {
+    "description": "Sign In button text"
+  },
+  
+  "signUp": "Sign Up",
+  "@signUp": {
+    "description": "Sign Up button text"
+  },
+  
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  
+  "fullName": "Full Name",
+  "@fullName": {
+    "description": "Full name field label"
+  },
+  
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout button text"
+  },
+  
+  "language": "Language",
+  "@language": {
+    "description": "Language text"
+  },
+  
+  "selectLanguage": "Select Language",
+  "@selectLanguage": {
+    "description": "Select language text"
+  },
+  
+  "english": "English",
+  "@english": {
+    "description": "English language name"
+  },
+  
+  "hindi": "हिन्दी",
+  "@hindi": {
+    "description": "Hindi language name in Hindi"
+  },
+  
+  "tamil": "தமிழ்",
+  "@tamil": {
+    "description": "Tamil language name in Tamil"
+  },
+  
+  "telugu": "తెలుగు",
+  "@telugu": {
+    "description": "Telugu language name in Telugu"
+  }
+}
